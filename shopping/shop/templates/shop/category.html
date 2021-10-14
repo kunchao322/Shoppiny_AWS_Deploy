@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block metadescription %}
+    {% if category %}
+        {{category.description|truncatewords:155}}
+    {% else %} 
+        Welcome!
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{category.name}} - Grocery store
+    {% else %}
+        See our produces!
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    {% if category %}
+        <div>  
+            <div>  
+                <p><a href  ="{% url "shop:allProdCat" %}"> All Items </a> | {{category.name}} </p>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class = "mx-auto"> 
+    {% if category %}
+        <img class = "my_image" src = "{{category.image.url}}" alt = "{{category.name}}">
+    </div>
+    <br>
+    <div>
+        <h1 class = "text-center my_title"> {{category.name}} </h1>
+        <p class = "text-justify"> {{category.description}}</p>
+    </div>
+    {% else %}
+     </div>   
+    <br>
+    <div>
+        <h1 class = 'text-center my_title'>Product collections</h1>
+        <p class = 'text-center'> All product info from Amazon fresh. </p>
+    </div>
+    {% endif %}
+
+
+            {% for product in products %}
+                 <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md12 col-lg-4">
+                    <div class="card text-center" style="min-width: 18rem;">" 
+                        <a href = ""><img class = "my_image"  src = "{{product.image.url}}" alt = "{{product.name}}"></a>
+                        <div class = 'card-body'> 
+                            <h6>{{product.name}}</h6>   
+                            <p>${{product.price}}</p>
+                             <p>Desciption</p>
+                                <p>{{product.description}}</p> 
+                                {% if product.stock <= 0 %} 
+                                <p><b>Out of Stock</b></p> 
+                                {% else %}
+							<a class="btn btn-primary" href="{% url 'cart:add_cart' product.id %}">Add to Cart</a>
+                                {% endif %}
+                            <br>
+                        </div>
+                   </div>
+                </div> 
+            {% endfor %}
+
+
+{% endblock %}

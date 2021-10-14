@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "aws_region": "us-west-1",
+        "django_settings": "shopping.settings",
+        "profile_name": "default",
+        "project_name": "shopping",
+        "runtime": "python3.8",
+        "s3_bucket": "zappa-ht3kuftq5"
+    }
+}
